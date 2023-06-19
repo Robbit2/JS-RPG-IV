@@ -53,6 +53,10 @@ const renderStats = (plr) => {
                         <br>☣ Crit | ${numeral(plr.stats.Crit).format("0.[00]a")}
                         <br>⚲ Piercing | ${numeral(plr.stats.Piercing).format("0.[00]a")}
                         <br><h2>♛ Combat Power | ${numeral(plr.combatPower).format("0.[00]a")}</h2>`;
+    renderXp(plr);
+};
+
+const renderXp = (plr) => {
     document.querySelector("#player-title").innerHTML = `[Lvl.${plr.level}] ${plr.className}`;
     document.querySelector("#expText").innerHTML = `${numeral(plr.xp).format("0.[00]a")} / ${numeral(plr.xpNeeded).format("0.[00]a")}`;
     document.querySelector("#expBar").value = plr.xp;
