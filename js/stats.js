@@ -17,6 +17,8 @@ const classes = {
     }
 };
 
+const levelPercentIncrease = 4;
+
 class Player {
     constructor ({className}){
         this.stats = {};
@@ -24,6 +26,10 @@ class Player {
             this.stats[stat] = classes[className][stat];
         }
         this.combatPower = this.getCombatPower();
+        this.level = 1;
+        this.className = className;
+        this.xp = 0;
+        this.xpNeeded = Math.floor(100*(this.level/1.33)**levelPercentIncrease);
     }
 
     getCombatPower () {
@@ -40,14 +46,27 @@ class Player {
 const renderStats = (plr) => {
     let statsDOM = document.querySelector("#stats");
     statsDOM.innerHTML = `Stats: 
-                        <br>♡ HP | ${plr.stats.HP}
-                        <br>⚔ Attack | ${plr.stats.Attack}
-                        <br>⛨ Armor | ${plr.stats.Armor}
-                        <br>🜸 Attack Speed | ${plr.stats["Attack Speed"]}
-                        <br>☣ Crit | ${plr.stats.Crit}
-                        <br>⚲ Piercing | ${plr.stats.Piercing}
-                        <br><h2>♛ Combat Power | ${plr.combatPower}</h2>`;
+                        <br>♡ HP | ${numeral(plr.stats.HP).format("0.[00]a")}
+                        <br>⚔ Attack | ${numeral(plr.stats.Attack).format("0.[00]a")}
+                        <br>⛨ Armor | ${numeral(plr.stats.Armor).format("0.[00]a")}
+                        <br>🜸 Attack Speed | ${numeral(plr.stats["Attack Speed"]).format("0.[00]a")}
+                        <br>☣ Crit | ${numeral(plr.stats.Crit).format("0.[00]a")}
+                        <br>⚲ Piercing | ${numeral(plr.stats.Piercing).format("0.[00]a")}
+                        <br><h2>♛ Combat Power | ${numeral(plr.combatPower).format("0.[00]a")}</h2>`;
+    document.querySelector("#player-title").innerHTML = `[Lvl.${plr.level}] ${plr.className}`;
+    document.querySelector("#expText").innerHTML = `${numeral(plr.xp).format("0.[00]a")} / ${numeral(plr.xpNeeded).format("0.[00]a")}`;
+    document.querySelector("#expBar").value = plr.xp;
+    document.querySelector("#expBar").max = plr.xpNeeded
+};
+
+const save = (plr) => {
+    localStorage.gameSave = JSON.stringify(plr);
+    return true;
 };
 
 let player = new Player({className: "Warrior"});
 renderStats(player);
+setInterval(() => {
+    player.getCombatPower();
+    renderStats(player);
+}, 50)
