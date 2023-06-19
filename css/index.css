@@ -1,0 +1,88 @@
+:root {
+    --grey:#ccc;
+    --green:#3aec3a;
+    --blue:#0059ff;
+    --purple:#aa2cf3;
+    --yellow:#ffff00;
+    --gold:#fce51c;
+    --orange:#ff9100;
+    --red:#e02525;
+    --dark-grey:#808080;
+    --dark-green:#289928;
+    --dark-blue:#0f46aa;
+    --dark-purple:#5f138b;
+    --dark-yellow:#acac01;
+    --dark-gold:#8f841f;
+    --dark-orange:#9c5901;
+    --dark-red:#800707;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    overflow: hidden;
+}
+
+.item {
+    height:64px;
+    width:64px;
+    background:var(--grey);
+    border-radius: 10px;
+    margin:4px;
+    position: relative;
+    transition: .25s all;
+}
+
+.item:hover {
+    box-shadow: 0px 10px 0px 0px var(--dark-grey);
+    -webkit-box-shadow: 0px 10px 0px 0px var(--dark-grey);
+    -moz-box-shadow: 0px 10px 0px 0px var(--dark-grey);
+    transform: translate(0%, -25%);
+    transition: all 0.4s ease 0s;
+}
+
+.item img {
+    height:90%;
+    width:90%;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+#items {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding:4px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+  
+  /* Tooltip text */
+.tooltip .tooltiptext {
+    opacity:0;
+    width: 120px;
+    background-color: var(--grey);
+    color: #000;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 25%;
+    left: 115%;
+    transition: 0.25s all;
+}
+  
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    opacity:1;
+}
