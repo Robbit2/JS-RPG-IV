@@ -43,10 +43,10 @@ class Player {
         this.xpNeeded = Math.floor(100*(this.level/1.33)**levelPercentIncrease);
         this.inventory = [];
         this.gear = {
-            "head" : {"src":"./assets/Bacon.png","name":"E","level":100,"stat":[100,"Attack Speed"],"rarity":"Rare"},
-            "body" : {"src":"./assets/Bacon.png","name":"E","level":100,"stat":[100,"Attack Speed"],"rarity":"Rare"},
-            "legs" : {"src":"./assets/Bacon.png","name":"E","level":100,"stat":[100,"Attack Speed"],"rarity":"Rare"},
-            "mainhand" : {"src":"./assets/Bacon.png","name":"E","level":100,"stat":[100,"Attack Speed"],"rarity":"Rare"},
+            "head" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"],[200,"Attack"]],"rarity":"Rare","type":"Weapon"},
+            "body" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
+            "legs" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
+            "mainhand" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
             "offhand" : null
         };
     }
@@ -91,23 +91,38 @@ const save = (plr) => {
 const renderGear = (plr) => {
     const gear = plr.gear;
     const gearDom = "#items-";
-    for(let item in gear){
-        if(gear[item] !== null){
+    for (let item in gear) {
+        if (gear[item] !== null) {
+            let statsText = "";
+            for (let stat in gear[item].stats) {
+                let amount = gear[item].stats[stat][0];
+                let type = gear[item].stats[stat][1];
+                if (amount === 0) {
+                    statsText = statsText;
+                } else {
+                    statsText += `+${amount} ${type}<br>`;
+                }
+            }
+            let darkHexCode = getComputedStyle(document.documentElement).getPropertyValue(`--dark-${rarities[gear[item].rarity]}`);
+            let HexCode = getComputedStyle(document.documentElement).getPropertyValue(`--${rarities[gear[item].rarity]}`);
             document.querySelector(`${gearDom}${item}`).innerHTML = `
             <img src="${gear[item].src}">
             <span id="${item}-tooltip" class="tooltiptext">
                 [Lvl.${gear[item].level}] ${gear[item].name}
-                <h3>${gear[item].stat[0]} ${gear[item].stat[1]}</h3>
+                <br><br>
+                ${statsText}
+                <br><br>
+                <span style="color:${HexCode};"><b>${gear[item].rarity}</b></span>
             </span>
             `;
             // sets color for the background of the item icon
             document.querySelector(`${gearDom}${item}`).style.background = `var(--${rarities[gear[item].rarity]})`;
             // hexCode gets the :root variable hex code for the dark version of the item rarity color
-            let hexCode = getComputedStyle(document.documentElement).getPropertyValue(`--dark-${rarities[gear[item].rarity]}`);
             // sets the variable to the dark color to prevent from a constant box-shadow
-            document.querySelector(`${gearDom}${item}`).style.setProperty("--hover-shadow",hexCode);
+            document.querySelector(`${gearDom}${item}`).style.setProperty("--hover-shadow",darkHexCode);
         }else{
             document.querySelector(`${gearDom}${item}`).innerHTML = "";
+            document.querySelector(`${gearDom}${item}`).style.setProperty("--hover-shadow",getComputedStyle(document.documentElement).getPropertyValue(`--dark-grey`))
         }
     }
 };
