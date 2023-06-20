@@ -1,10 +1,10 @@
 :root {
     --grey:#ccc;
     --green:#3aec3a;
-    --blue:#0059ff;
+    --blue:#2972fa;
     --purple:#aa2cf3;
     --yellow:#ffff00;
-    --gold:#fce51c;
+    --teal:#1cdafc;
     --orange:#ff9100;
     --red:#e02525;
     --dark-grey:#808080;
@@ -12,7 +12,7 @@
     --dark-blue:#0f46aa;
     --dark-purple:#5f138b;
     --dark-yellow:#acac01;
-    --dark-gold:#8f841f;
+    --dark-teal:#0b859b;
     --dark-orange:#9c5901;
     --dark-red:#800707;
 }
@@ -36,9 +36,9 @@ body, html {
 }
 
 .item:hover {
-    box-shadow: 0px 10px 0px 0px var(--dark-grey);
-    -webkit-box-shadow: 0px 10px 0px 0px var(--dark-grey);
-    -moz-box-shadow: 0px 10px 0px 0px var(--dark-grey);
+    box-shadow: 0px 10px 0px 0px var(--hover-shadow);
+    /*-webkit-box-shadow: 0px 10px 0px 0px var(--dark-grey);
+    -moz-box-shadow: 0px 10px 0px 0px var(--dark-grey);*/
     transform: translate(0%, -25%);
     transition: all 0.4s ease 0s;
 }
@@ -67,7 +67,7 @@ body, html {
   /* Tooltip text */
 .tooltip .tooltiptext {
     opacity:0;
-    width: 120px;
+    width: 200px;
     background-color: var(--grey);
     color: #000;
     text-align: center;
@@ -77,9 +77,10 @@ body, html {
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
-    top: 25%;
+    top: 0;
     left: 115%;
     transition: 0.25s all;
+    pointer-events: none;
 }
   
 /* Show the tooltip text when you mouse over the tooltip container */
