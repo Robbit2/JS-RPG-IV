@@ -7,35 +7,46 @@
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-    <h1 id="player-title">[Lvl.100] Warlock</h1>
-    <progress class="darkmode-ignore" id="expBar" max="100" value="10"></progress><br>
-    <span id="expText">10 / 100</span>
-    <h3 id="stats">Stats:</h3>
-    <section id="items">
-        <div id="items-head" class="item darkmode-ignore tooltip">
-            <img src="./assets/Bacon.png">
-            <span class="tooltiptext">Tooltip text</span>
-        </div>
-        <div id="items-body" class="item darkmode-ignore tooltip">
-            <img src="https://placehold.co/64">
-            <span class="tooltiptext">Tooltip text</span>
-        </div>
-        <div id="items-legs" class="item darkmode-ignore tooltip">
-            <img src="https://placehold.co/64">
-            <span class="tooltiptext">Tooltip text</span>
-        </div>
-        <div id="items-mainhand" class="item darkmode-ignore tooltip">
-            <img src="https://placehold.co/64">
-            <span class="tooltiptext">Tooltip text</span>
-        </div>
-        <div id="items-offhand" class="item darkmode-ignore tooltip">
-            <img src="https://placehold.co/64">
-            <span class="tooltiptext">Tooltip text</span>
-        </div>
+    <section id="stats-div">
+        <h1 id="player-title">[Lvl.100] Warlock</h1>
+        <progress class="darkmode-ignore" id="expBar" max="100" value="10"></progress><br>
+        <span id="expText">10 / 100</span>
+        <h3 id="stats-text">Stats:</h3>
+        <!-- Equipped Items -->
+        <section id="items">
+            <div id="items-head" class="item darkmode-ignore tooltip">
+                <img src="./assets/Bacon.png">
+                <span class="tooltiptext">Tooltip text</span>
+            </div>
+            <div id="items-body" class="item darkmode-ignore tooltip">
+                <img src="https://placehold.co/64">
+                <span class="tooltiptext">Tooltip text</span>
+            </div>
+            <div id="items-legs" class="item darkmode-ignore tooltip">
+                <img src="https://placehold.co/64">
+                <span class="tooltiptext">Tooltip text</span>
+            </div>
+            <div id="items-mainhand" class="item darkmode-ignore tooltip">
+                <img src="https://placehold.co/64">
+                <span class="tooltiptext">Tooltip text</span>
+            </div>
+            <div id="items-offhand" class="item darkmode-ignore tooltip">
+                <img src="https://placehold.co/64">
+                <span class="tooltiptext">Tooltip text</span>
+            </div>
+        </section>
     </section>
-    <br>
-    <button>Quick Equip</button>
-
+    <!-- Enemy and Player -->
+    <section id="combat">
+        <section id="player">
+            <div id="player-icon">
+                <img id="player-icon-img" height="128" width="128">
+            </div>
+            <progress id="player-health-bar" class="darkmode-ignore" max="100" value="100"></progress>
+            <br>
+            <span id="player-health">[ 100 / 100 ]</span>
+        </section>
+    </section>
     <!-- Import Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>

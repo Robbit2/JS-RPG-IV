@@ -1,18 +1,26 @@
 const classes = {
     "Mage" : {
         "HP" : 100,
-        "Attack" : 0,
+        "Attack" : 100,
         "Armor" : 0,
         "Attack Speed" : 100,
-        "Crit" : 0,
-        "Piercing" : 100
+        "Crit" : 100,
+        "Piercing" : 200
     },
     "Warrior" : {
-        "HP" : 500,
+        "HP" : 400,
         "Attack" : 0,
-        "Armor" : 0,
+        "Armor" : 100,
         "Attack Speed" : 50,
         "Crit" : 0,
+        "Piercing" : 50
+    },
+    "Cleric" : {
+        "HP" : 250,
+        "Attack" : 0,
+        "Armor" : 200,
+        "Attack Speed" : 50,
+        "Crit" : 50,
         "Piercing" : 50
     }
 };
@@ -30,6 +38,19 @@ const rarities = {
 
 const levelPercentIncrease = 4;
 
+const Enemy = {
+    "name" : "Goblin",
+    "level" : 1,
+    "stats" : {
+        "HP" : 25,
+        "Attack" : 0,
+        "Armor" : 20,
+        "Attack Speed" : 50,
+        "Crit" : 10,
+        "Piercing" : 50
+    }
+};
+
 class Player {
     constructor ({className}){
         this.stats = {};
@@ -45,13 +66,14 @@ class Player {
         this.xpNeeded = Math.floor(100*(this.level/1.33)**levelPercentIncrease);
         this.inventory = [];
         this.gear = {
-            "head" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"],[2200,"Attack"]],"rarity":"Rare","type":"Weapon"},
-            "body" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
-            "legs" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
-            "mainhand" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Bow"},
+            "head" : null,
+            "body" : null,
+            "legs" : null,
+            "mainhand" : null,
             "offhand" : null
         };
     }
+//{"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"],[2200,"Attack"]],"rarity":"Rare","type":"Weapon"}
 
     getCombatPower () {
         let combatPower = 0;
@@ -79,7 +101,7 @@ class Player {
 }
 
 const renderStats = (plr) => {
-    let statsDOM = document.querySelector("#stats");
+    let statsDOM = document.querySelector("#stats-text");
     statsDOM.innerHTML = `
         Stats: 
         <br>♡ HP | ${numeral(plr.stats.HP).format("0.[00]a")}
@@ -143,11 +165,18 @@ const renderGear = (plr) => {
     }
 };
 
-let player = new Player({className: "Mage"});
+const renderCombat = (plr) => {
+    let className = plr.className;
+    let classImg = `./assets/Classes/${className}.png`;
+    document.querySelector("#player-icon-img").src = classImg;
+};
+
+let player = new Player({className: "Cleric"});
 renderStats(player);
 setInterval(() => {
     player.getCombatPower();
     player.addTotalStats();
     renderStats(player);
     renderGear(player);
+    renderCombat(player);
 }, 50);

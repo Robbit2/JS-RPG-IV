@@ -89,3 +89,13 @@ body, html {
 .tooltip:hover .tooltiptext {
     opacity:1;
 }
+
+#combat {
+    width:50%;
+    float:right;
+}
+
+#stats-div {
+    width:50%;
+    float:left;
+}
