@@ -33,8 +33,10 @@ const levelPercentIncrease = 4;
 class Player {
     constructor ({className}){
         this.stats = {};
+        this.baseStats = {};
         for(let stat in classes[className]){
             this.stats[stat] = classes[className][stat];
+            this.baseStats[stat] = classes[className][stat];
         }
         this.combatPower = this.getCombatPower();
         this.level = 1;
@@ -43,10 +45,10 @@ class Player {
         this.xpNeeded = Math.floor(100*(this.level/1.33)**levelPercentIncrease);
         this.inventory = [];
         this.gear = {
-            "head" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"],[200,"Attack"]],"rarity":"Rare","type":"Weapon"},
+            "head" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"],[2200,"Attack"]],"rarity":"Rare","type":"Weapon"},
             "body" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
             "legs" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
-            "mainhand" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Weapon"},
+            "mainhand" : {"src":"./assets/Bacon.png","name":"Bacon","level":100,"stats":[[100,"Attack Speed"]],"rarity":"Rare","type":"Bow"},
             "offhand" : null
         };
     }
@@ -59,6 +61,20 @@ class Player {
         }
         this.combatPower = combatPower;
         return combatPower;
+    }
+
+    addTotalStats () {
+        for(let _ in this.stats){
+            this.stats[_] = this.baseStats[_];
+        }
+        for (let item in this.gear) {
+            if(this.gear[item] !== null){
+                for(let stat in this.gear[item].stats){
+                    let statName = this.gear[item].stats[stat][1];
+                    this.stats[statName] += this.gear[item].stats[stat][0];
+                }
+            }
+        }
     }
 }
 
@@ -103,6 +119,7 @@ const renderGear = (plr) => {
                     statsText += `+${amount} ${type}<br>`;
                 }
             }
+            // hexCode gets the :root variable hex code for the dark version of the item rarity color
             let darkHexCode = getComputedStyle(document.documentElement).getPropertyValue(`--dark-${rarities[gear[item].rarity]}`);
             let HexCode = getComputedStyle(document.documentElement).getPropertyValue(`--${rarities[gear[item].rarity]}`);
             document.querySelector(`${gearDom}${item}`).innerHTML = `
@@ -111,13 +128,12 @@ const renderGear = (plr) => {
                 [Lvl.${gear[item].level}] ${gear[item].name}
                 <br><br>
                 ${statsText}
-                <br><br>
-                <span style="color:${HexCode};"><b>${gear[item].rarity}</b></span>
+                <br>
+                <span style="color:${HexCode};"><b>${gear[item].rarity} ${gear[item].type}</b></span>
             </span>
             `;
             // sets color for the background of the item icon
             document.querySelector(`${gearDom}${item}`).style.background = `var(--${rarities[gear[item].rarity]})`;
-            // hexCode gets the :root variable hex code for the dark version of the item rarity color
             // sets the variable to the dark color to prevent from a constant box-shadow
             document.querySelector(`${gearDom}${item}`).style.setProperty("--hover-shadow",darkHexCode);
         }else{
@@ -127,10 +143,11 @@ const renderGear = (plr) => {
     }
 };
 
-let player = new Player({className: "Warrior"});
+let player = new Player({className: "Mage"});
 renderStats(player);
 setInterval(() => {
     player.getCombatPower();
+    player.addTotalStats();
     renderStats(player);
     renderGear(player);
 }, 50);
